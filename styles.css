@@ -237,4 +237,155 @@ h1 {
         width: 180px;
         font-size: 16px;
     }
+}
+
+/* Add these styles for the Flatpickr customization */
+.flatpickr-calendar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 15px !important;
+    border: none !important;
+    backdrop-filter: blur(10px);
+}
+
+.flatpickr-months {
+    background: var(--gradient);
+    border-radius: 15px 15px 0 0;
+    padding: 10px 0;
+    margin: -1px -1px 0 -1px;
+}
+
+.flatpickr-month {
+    height: 50px !important;
+}
+
+.flatpickr-current-month {
+    padding: 8px 0 0 0 !important;
+    font-size: 1.2em !important;
+}
+
+.flatpickr-monthDropdown-months {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 5px;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 5px 10px !important;
+}
+
+.flatpickr-monthDropdown-month {
+    background-color: white !important;
+    color: var(--text-color) !important;
+    padding: 8px !important;
+}
+
+.flatpickr-months .flatpickr-prev-month, 
+.flatpickr-months .flatpickr-next-month {
+    top: 8px !important;
+    padding: 5px !important;
+    color: white !important;
+    fill: white !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover, 
+.flatpickr-months .flatpickr-next-month:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.flatpickr-current-month .numInputWrapper {
+    width: 7ch !important;
+}
+
+.flatpickr-current-month input.cur-year {
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 0 10px !important;
+}
+
+.flatpickr-weekdays {
+    background: rgba(52, 152, 219, 0.1);
+    margin-top: 10px;
+}
+
+.flatpickr-weekday {
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+.flatpickr-day {
+    border-radius: 8px !important;
+    margin: 2px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+.flatpickr-day.selected {
+    background: var(--gradient) !important;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3) !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(52, 152, 219, 0.1) !important;
+    border-color: transparent !important;
+    color: var(--primary-color) !important;
+}
+
+.flatpickr-day.today {
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+}
+
+.flatpickr-day.today:hover {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+/* Enhance the date input field */
+#birthdate {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    background: white;
+    cursor: pointer;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+#birthdate:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
+}
+
+#birthdate:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+/* Calendar container enhancements */
+.calendar-frame {
+    position: relative;
+    z-index: 1;
+}
+
+.year-selector {
+    margin-bottom: 20px;
+}
+
+.year-selector label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 500;
 } 

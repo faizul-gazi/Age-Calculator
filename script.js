@@ -1,12 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Flatpickr with custom styling
     flatpickr("#birthdate", {
-        dateFormat: "Y-m-d",
+        dateFormat: "F j, Y",
         maxDate: "today",
         minDate: "1900-01-01",
         defaultDate: "today",
         animate: true,
-        theme: "material_blue"
+        theme: "material_blue",
+        disableMobile: false,
+        monthSelectorType: "dropdown",
+        position: "auto",
+        showMonths: 1,
+        static: true,
+        yearSelectorType: "dropdown",
+        onChange: function(selectedDates, dateStr) {
+            // Add subtle animation when date changes
+            const input = document.getElementById('birthdate');
+            input.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                input.style.transform = 'scale(1)';
+            }, 200);
+        },
+        onOpen: function(selectedDates, dateStr, instance) {
+            // Add animation when calendar opens
+            instance.calendarContainer.style.transform = 'translateY(10px)';
+            instance.calendarContainer.style.opacity = '0';
+            setTimeout(() => {
+                instance.calendarContainer.style.transform = 'translateY(0)';
+                instance.calendarContainer.style.opacity = '1';
+            }, 0);
+        }
     });
 
     const calculateBtn = document.getElementById('calculateBtn');
