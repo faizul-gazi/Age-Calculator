@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magical Age Calculator ✨</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add Flatpickr for better date picker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -26,7 +27,9 @@
             </div>
         </div>
 
-        <button id="calculateBtn" class="calculate-btn">Your Age ⬇️</button>
+        <button id="calculateBtn" class="calculate-btn">
+            <span>Your Age ⬇️</span>
+        </button>
 
         <div class="result-frame">
             <p id="result" class="result-text"></p>
@@ -34,5 +37,14 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Initialize tilt effect
+        VanillaTilt.init(document.querySelector(".container"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+    </script>
 </body>
 </html> 

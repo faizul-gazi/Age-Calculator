@@ -1,18 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Flatpickr
+    // Initialize Flatpickr with custom styling
     flatpickr("#birthdate", {
         dateFormat: "Y-m-d",
         maxDate: "today",
         minDate: "1900-01-01",
-        defaultDate: "today"
+        defaultDate: "today",
+        animate: true,
+        theme: "material_blue"
     });
 
     const calculateBtn = document.getElementById('calculateBtn');
     const resultText = document.getElementById('result');
     const birthdateInput = document.getElementById('birthdate');
 
-    calculateBtn.addEventListener('click', calculateAge);
-    birthdateInput.addEventListener('change', calculateAge);
+    calculateBtn.addEventListener('click', calculateAgeWithAnimation);
+    birthdateInput.addEventListener('change', calculateAgeWithAnimation);
+
+    function calculateAgeWithAnimation() {
+        // Add loading state
+        calculateBtn.classList.add('loading');
+        resultText.textContent = "Calculating...";
+
+        // Simulate loading for smooth animation
+        setTimeout(() => {
+            calculateAge();
+            calculateBtn.classList.remove('loading');
+        }, 500);
+    }
 
     function calculateAge() {
         try {
@@ -20,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
 
             if (birthDate > today) {
-                resultText.textContent = "🤔 You haven't been born yet!";
+                showResult("🤔 You haven't been born yet!");
                 return;
             }
 
@@ -39,17 +53,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 months += 12;
             }
 
-            const result = `✨ Your magical age is:\n${years} years, ${months} months, and ${days} days! 🎉\nBorn on: ${birthDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+            const result = `✨ Your magical age is:\n${years} years, ${months} months, and ${days} days! 🎉\n\nBorn on: ${birthDate.toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            })}`;
             
-            resultText.textContent = result;
-            
-            // Add bounce animation
+            showResult(result);
+
+        } catch (error) {
+            showResult("An error occurred. Please try again.");
+        }
+    }
+
+    function showResult(text) {
+        resultText.style.opacity = '0';
+        
+        setTimeout(() => {
+            resultText.textContent = text;
+            resultText.style.opacity = '1';
             resultText.classList.remove('bounce');
             void resultText.offsetWidth; // Trigger reflow
             resultText.classList.add('bounce');
-
-        } catch (error) {
-            resultText.textContent = "An error occurred. Please try again.";
-        }
+        }, 200);
     }
 }); 
