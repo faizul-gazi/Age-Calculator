@@ -6,42 +6,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultText = document.getElementById('result');
 
     // Set max year to current year
-    yearInput.max = new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
+    yearInput.max = currentYear;
+    yearInput.min = 1900;
 
     // Add input validation
     dayInput.addEventListener('input', validateDay);
     monthInput.addEventListener('change', validateDay);
     yearInput.addEventListener('input', validateYear);
+    
+    // Add blur event listeners for additional validation
+    yearInput.addEventListener('blur', validateYear);
+    dayInput.addEventListener('blur', validateDay);
 
     function validateDay() {
         const day = parseInt(dayInput.value);
         const month = parseInt(monthInput.value);
         const year = parseInt(yearInput.value);
         
-        if (month !== null && year) {
+        if (!isNaN(month) && !isNaN(year)) {
             const lastDay = new Date(year, month + 1, 0).getDate();
             dayInput.max = lastDay;
             
             if (day > lastDay) {
                 dayInput.value = lastDay;
+            } else if (day < 1) {
+                dayInput.value = 1;
             }
-        }
-
-        if (day < 1) {
-            dayInput.value = 1;
         }
     }
 
     function validateYear() {
-        const year = parseInt(yearInput.value);
-        const currentYear = new Date().getFullYear();
+        let year = parseInt(yearInput.value);
         
+        if (isNaN(year)) {
+            yearInput.value = currentYear;
+            return;
+        }
+
+        // Automatically format two-digit years
+        if (year < 100) {
+            if (year < 30) { // Assume 21st century for years 00-29
+                year += 2000;
+            } else { // Assume 20th century for years 30-99
+                year += 1900;
+            }
+            yearInput.value = year;
+        }
+
+        // Enforce min/max constraints
         if (year > currentYear) {
             yearInput.value = currentYear;
-        }
-        if (year < 1900) {
+            yearInput.classList.add('input-error');
+            setTimeout(() => yearInput.classList.remove('input-error'), 500);
+        } else if (year < 1900) {
             yearInput.value = 1900;
+            yearInput.classList.add('input-error');
+            setTimeout(() => yearInput.classList.remove('input-error'), 500);
         }
+
+        validateDay(); // Revalidate day when year changes (for leap years)
     }
 
     calculateBtn.addEventListener('click', calculateAgeWithAnimation);
@@ -77,15 +101,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
+        // Additional validation for valid date
+        const day = parseInt(dayInput.value);
+        const month = parseInt(monthInput.value);
+        const year = parseInt(yearInput.value);
+        
+        const date = new Date(year, month, day);
+        if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+            showResult("Please enter a valid date!");
+            return false;
+        }
+
         return true;
     }
 
     function calculateAge() {
         try {
             const birthDate = new Date(
-                yearInput.value,
-                monthInput.value,
-                dayInput.value
+                parseInt(yearInput.value),
+                parseInt(monthInput.value),
+                parseInt(dayInput.value)
             );
             const today = new Date();
 
