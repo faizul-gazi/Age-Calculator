@@ -5,19 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
     const resultText = document.getElementById('result');
 
-    // Set max year to current year
+    // Populate year dropdown
     const currentYear = new Date().getFullYear();
-    yearInput.max = currentYear;
-    yearInput.min = 1900;
+    for (let year = currentYear; year >= 1900; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearInput.appendChild(option);
+    }
 
     // Add input validation
     dayInput.addEventListener('input', validateDay);
     monthInput.addEventListener('change', validateDay);
-    yearInput.addEventListener('input', validateYear);
-    
-    // Add blur event listeners for additional validation
-    yearInput.addEventListener('blur', validateYear);
-    dayInput.addEventListener('blur', validateDay);
+    yearInput.addEventListener('change', validateDay);
 
     function validateDay() {
         const day = parseInt(dayInput.value);
@@ -34,38 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 dayInput.value = 1;
             }
         }
-    }
-
-    function validateYear() {
-        let year = parseInt(yearInput.value);
-        
-        if (isNaN(year)) {
-            yearInput.value = currentYear;
-            return;
-        }
-
-        // Automatically format two-digit years
-        if (year < 100) {
-            if (year < 30) { // Assume 21st century for years 00-29
-                year += 2000;
-            } else { // Assume 20th century for years 30-99
-                year += 1900;
-            }
-            yearInput.value = year;
-        }
-
-        // Enforce min/max constraints
-        if (year > currentYear) {
-            yearInput.value = currentYear;
-            yearInput.classList.add('input-error');
-            setTimeout(() => yearInput.classList.remove('input-error'), 500);
-        } else if (year < 1900) {
-            yearInput.value = 1900;
-            yearInput.classList.add('input-error');
-            setTimeout(() => yearInput.classList.remove('input-error'), 500);
-        }
-
-        validateDay(); // Revalidate day when year changes (for leap years)
     }
 
     calculateBtn.addEventListener('click', calculateAgeWithAnimation);
