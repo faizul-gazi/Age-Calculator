@@ -15,7 +15,7 @@ A beautiful and interactive desktop application that calculates your exact age i
 
 ## Screenshots 📸
 
-[Add screenshots of your application here]
+![Screenshot_13](https://github.com/user-attachments/assets/cfa94a5b-d004-42ed-9d20-d65ede985980)
 
 ## Installation 🚀
 
