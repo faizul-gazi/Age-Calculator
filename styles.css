@@ -1,0 +1,141 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --background-color: #f0f8ff;
+    --text-color: #2c3e50;
+    --border-color: #bdc3c7;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.title-frame {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    margin: 0;
+    font-size: 28px;
+}
+
+.instruction {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.calendar-frame {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.year-selector {
+    margin-bottom: 15px;
+}
+
+.year-selector label {
+    font-weight: bold;
+    color: var(--text-color);
+    margin-right: 10px;
+}
+
+#birthdate {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.calculate-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 200px;
+    margin: 20px auto;
+    display: block;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.calculate-btn:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.02);
+}
+
+.result-frame {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-text {
+    color: var(--text-color);
+    font-size: 18px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Animation for result */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    20% { transform: translateY(-20px); }
+    40% { transform: translateY(0); }
+    60% { transform: translateY(-10px); }
+    80% { transform: translateY(0); }
+}
+
+.bounce {
+    animation: bounce 1s ease;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .calculate-btn {
+        width: 180px;
+        font-size: 16px;
+    }
+} 

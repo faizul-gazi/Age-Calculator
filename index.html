@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Age Calculator ✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Flatpickr for better date picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title-frame">
+            <h1>✨ Magical Age Calculator ✨</h1>
+        </div>
+
+        <div class="instruction">
+            <p>📅 Select your birthdate below</p>
+        </div>
+
+        <div class="calendar-frame">
+            <div class="year-selector">
+                <label for="birthdate">Select Date:</label>
+                <input type="text" id="birthdate" placeholder="Pick your birthdate">
+            </div>
+        </div>
+
+        <button id="calculateBtn" class="calculate-btn">Your Age ⬇️</button>
+
+        <div class="result-frame">
+            <p id="result" class="result-text"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
