@@ -1,59 +1,92 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Flatpickr with custom styling
-    flatpickr("#birthdate", {
-        dateFormat: "F j, Y",
-        maxDate: "today",
-        minDate: "1900-01-01",
-        defaultDate: "today",
-        animate: true,
-        theme: "material_blue",
-        disableMobile: false,
-        monthSelectorType: "dropdown",
-        position: "auto",
-        showMonths: 1,
-        static: true,
-        yearSelectorType: "dropdown",
-        onChange: function(selectedDates, dateStr) {
-            // Add subtle animation when date changes
-            const input = document.getElementById('birthdate');
-            input.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                input.style.transform = 'scale(1)';
-            }, 200);
-        },
-        onOpen: function(selectedDates, dateStr, instance) {
-            // Add animation when calendar opens
-            instance.calendarContainer.style.transform = 'translateY(10px)';
-            instance.calendarContainer.style.opacity = '0';
-            setTimeout(() => {
-                instance.calendarContainer.style.transform = 'translateY(0)';
-                instance.calendarContainer.style.opacity = '1';
-            }, 0);
-        }
-    });
-
+    const dayInput = document.getElementById('day');
+    const monthInput = document.getElementById('month');
+    const yearInput = document.getElementById('year');
     const calculateBtn = document.getElementById('calculateBtn');
     const resultText = document.getElementById('result');
-    const birthdateInput = document.getElementById('birthdate');
+
+    // Set max year to current year
+    yearInput.max = new Date().getFullYear();
+
+    // Add input validation
+    dayInput.addEventListener('input', validateDay);
+    monthInput.addEventListener('change', validateDay);
+    yearInput.addEventListener('input', validateYear);
+
+    function validateDay() {
+        const day = parseInt(dayInput.value);
+        const month = parseInt(monthInput.value);
+        const year = parseInt(yearInput.value);
+        
+        if (month !== null && year) {
+            const lastDay = new Date(year, month + 1, 0).getDate();
+            dayInput.max = lastDay;
+            
+            if (day > lastDay) {
+                dayInput.value = lastDay;
+            }
+        }
+
+        if (day < 1) {
+            dayInput.value = 1;
+        }
+    }
+
+    function validateYear() {
+        const year = parseInt(yearInput.value);
+        const currentYear = new Date().getFullYear();
+        
+        if (year > currentYear) {
+            yearInput.value = currentYear;
+        }
+        if (year < 1900) {
+            yearInput.value = 1900;
+        }
+    }
 
     calculateBtn.addEventListener('click', calculateAgeWithAnimation);
-    birthdateInput.addEventListener('change', calculateAgeWithAnimation);
 
     function calculateAgeWithAnimation() {
-        // Add loading state
+        if (!validateInputs()) {
+            return;
+        }
+
         calculateBtn.classList.add('loading');
         resultText.textContent = "Calculating...";
 
-        // Simulate loading for smooth animation
         setTimeout(() => {
             calculateAge();
             calculateBtn.classList.remove('loading');
         }, 500);
     }
 
+    function validateInputs() {
+        let isValid = true;
+        const inputs = [dayInput, monthInput, yearInput];
+        
+        inputs.forEach(input => {
+            if (!input.value) {
+                input.classList.add('input-error');
+                isValid = false;
+                setTimeout(() => input.classList.remove('input-error'), 500);
+            }
+        });
+
+        if (!isValid) {
+            showResult("Please fill in all date fields!");
+            return false;
+        }
+
+        return true;
+    }
+
     function calculateAge() {
         try {
-            const birthDate = new Date(birthdateInput.value);
+            const birthDate = new Date(
+                yearInput.value,
+                monthInput.value,
+                dayInput.value
+            );
             const today = new Date();
 
             if (birthDate > today) {
@@ -85,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showResult(result);
 
         } catch (error) {
-            showResult("An error occurred. Please try again.");
+            showResult("Please enter a valid date!");
         }
     }
 
@@ -96,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultText.textContent = text;
             resultText.style.opacity = '1';
             resultText.classList.remove('bounce');
-            void resultText.offsetWidth; // Trigger reflow
+            void resultText.offsetWidth;
             resultText.classList.add('bounce');
         }, 200);
     }
